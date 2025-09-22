@@ -1,0 +1,85 @@
+
+{% extends 'main.html' %}
+{% block content %}
+
+
+<h1>WELCOME TO IBMC BANK</h1>
+<!-- <spline-viewer class="background" url="https://prod.spline.design/ZYxMw9AX7miegQxi/scene.splinecode"></spline-viewer> -->
+<main class="wrap">
+  <form class="card" action="" method="POST" novalidate >
+    {% csrf_token %}
+
+    <!-- NAME -->
+    <div class="field">
+      <input placeholder=" " type="text" name="name" required>
+      <label>NAME</label>
+    </div>
+
+    <!-- PHONE -->
+    <div class="field">
+      <input placeholder=" " type="tel" name="phone" required>
+      <label>PHONE</label>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="field">
+      <input placeholder=" " type="email" name="mail" required>
+      <label>Email</label>
+    </div>
+
+    <!-- ADDRESS -->
+    <div class="field">
+      <textarea placeholder=" " name="add" rows="3" required></textarea>
+      <label>ADDRESS</label>
+    </div>
+
+    <!-- GENDER -->
+    <fieldset class="seg">
+      <legend>GENDER</legend>
+      <label><input type="radio" name="gen" value="Male" required><span>Male</span></label>
+      <label><input type="radio" name="gen" value="Female"><span>Female</span></label>
+      <label><input type="radio" name="gen" value="Others"><span>Others</span></label>
+    </fieldset>
+
+    <!-- DOB -->
+    <div class="field">
+        <legend>DOB</legend>
+        <input type="date" name="date" id="">
+      
+      
+    </div>
+
+    <!-- AADHAR -->
+    <div class="field">
+      <input placeholder=" " type="number" name="aadhar" required>
+      <label>AADHAR NUMBER</label>
+    </div>
+
+    <!-- REAL BUTTON (demo uses hash to show modal) -->
+    <button class="btn" type="submit" >Submit</button>
+    <!-- For real backend: remove the formaction above and on success redirect to this page with #submitted -->
+  </form>
+
+  <!-- Success modal target
+  <div id="submitted" class="modal">
+    <div class="modal__card">
+      <svg class="tick" viewBox="0 0 52 52" aria-hidden="true">
+        <circle class="tick__circle" cx="26" cy="26" r="25" fill="none"/>
+        <path class="tick__check" fill="none" d="M14 27 l8 8 16-18"/>
+      </svg>
+      <h2>Application Submitted</h2>
+      <p>Thank you for choosing IBMC Bank.</p>
+
+      <div class="confetti" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <a href="#" class="btn btn--ghost">Close</a>
+    </div>
+  </div>
+</main> -->
+
+
+
+{% endblock content %}

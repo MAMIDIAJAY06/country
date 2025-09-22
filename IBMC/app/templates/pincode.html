@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+   div{
+      display: flex;
+   }
+     .spline{
+        height: 400px;
+        width: 400px;
+        
+     }
+</style>
+<div class="cover">
+
+
+<spline-viewer url="https://prod.spline.design/rUJZyNZMdQKqCfus/scene.splinecode" class="spline"></spline-viewer>
+
+<h1>pin generation</h1>
+<div>
+   <form action="" method="post">
+      {% csrf_token %}
+      ACCOUNT NUMBER <input type="number" name="acc" id="">
+      <br><br>
+      <button type="submit">GENERATE OTP</button>
+   </form>
+</div>
+
+</div>
+{% endblock content %}

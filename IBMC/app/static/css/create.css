@@ -1,0 +1,199 @@
+/* ====== Base & Background ====== */
+:root{
+  --bg1:#9fddf3; --bg2:#34a4eb;
+  --ink:#0b2a4a; --muted:#5c6f82; --white:#fff;
+  --brand:#0a6cff; --brand2:#00c6ff; --ok:#28a745; --ring:rgba(10,108,255,.35);
+  --card:rgba(255,255,255,.16); --stroke:rgba(255,255,255,.55);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin-left: 8%;
+  font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background: radial-gradient(circle,var(--bg1),var(--bg2));
+  display:grid;
+  place-items:center;
+  overflow-x:hidden;
+  
+}
+h1{
+  color:#fff; letter-spacing:.12em; font-weight:700;
+  text-shadow:0 8px 24px rgba(0,0,0,.25);
+  margin:18px 0 10px; text-align:center;
+  animation:fadeDown .8s ease both;
+}
+.wrap{width:min(720px,92vw); display:grid; gap:16px; perspective:1200px}
+
+/* ====== Card ====== */
+.card{
+  background:var(--card);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border:1px solid var(--stroke);
+  box-shadow:0 20px 50px rgba(0,0,0,.25);
+  border-radius:20px;
+  padding:26px 26px 28px;
+  display:grid; gap:14px;
+  transform-origin:50% 100%;
+  animation:liftIn .9s cubic-bezier(.2,.8,.2,1) both .05s;
+}
+.card:hover{transform:rotateX(.8deg) rotateY(.8deg)}
+.card:has(input:focus, textarea:focus, select:focus){outline:2px solid var(--ring)}
+
+/* ====== Floating fields ====== */
+.field{position:relative}
+.field input,
+.field textarea{
+  width:100%; border:1.5px solid rgba(12,35,75,.18);
+  background:rgba(255,255,255,.9);
+  padding:14px 12px 12px;
+  border-radius:12px; font-size:15px; color:#0b2a4a;
+  transition:box-shadow .25s, transform .25s, border-color .25s, background .25s;
+}
+.field textarea{resize:vertical}
+.field input::placeholder,
+.field textarea::placeholder{color:transparent}
+
+.field label{
+  position:absolute; left:12px; top:12px;
+  font-size:13px; color:var(--muted);
+  pointer-events:none; transition:transform .25s, color .25s, background .25s, padding .25s;
+  padding:0 6px; background:transparent;
+}
+.field input:focus, .field textarea:focus{
+  border-color:var(--brand);
+  box-shadow:0 0 0 6px var(--ring); transform:translateY(-1px);
+  background:#fff;
+}
+/* floating state */
+.field input:not(:placeholder-shown) + label,
+.field textarea:not(:placeholder-shown) + label,
+.field input:focus + label, .field textarea:focus + label{
+  transform:translateY(-22px) scale(.92);
+  color:var(--brand);
+  background:linear-gradient(#fff,#fff) padding-box;
+}
+
+/* ====== Segmented radio ====== */
+.seg{margin:3px 0 6px; border:none; padding:0}
+.seg legend{font-size:13px; color:var(--muted); margin:6px 0 8px}
+.seg{display:flex; gap:10px}
+.seg label{
+  position:relative; display:inline-flex; align-items:center; justify-content:center;
+  padding:10px 14px; border-radius:12px; cursor:pointer; user-select:none;
+  border:1.5px solid rgba(12,35,75,.18); background:rgba(255,255,255,.9);
+  transition:transform .25s, box-shadow .25s, border-color .25s, background .25s;
+}
+.seg input{position:absolute; opacity:0; inset:0}
+.seg label:hover{transform:translateY(-1px)}
+.seg input:checked + span,
+.seg label:has(input:checked){
+  background:linear-gradient(135deg, var(--brand), var(--brand2));
+  color:#fff; border-color:transparent; box-shadow:0 8px 18px rgba(10,108,255,.35);
+}
+.seg span{position:relative; z-index:1}
+
+/* ====== Button (real) ====== */
+.btn{
+  position:relative; display:inline-flex; align-items:center; justify-content:center;
+  gap:.6ch; width:100%;
+  border:0; border-radius:14px; padding:14px 16px;
+  font-weight:700; letter-spacing:.02em; font-size:16px; color:#fff;
+  background:linear-gradient(135deg, var(--brand), var(--brand2));
+  box-shadow:0 12px 26px rgba(10,108,255,.35);
+  cursor:pointer; transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
+  overflow:hidden; isolation:isolate;
+}
+.btn:hover{transform:translateY(-2px); box-shadow:0 16px 34px rgba(10,108,255,.38)}
+.btn:active{transform:translateY(0); filter:saturate(1.05)}
+/* glossy shine sweep */
+.btn::after{
+  content:""; position:absolute; inset:-200% -60%;
+  background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,.6) 50%, transparent 70%);
+  transform:translateX(-40%) rotate(8deg);
+  animation:shine 2.2s ease infinite;
+  pointer-events:none; mix-blend-mode:screen;
+}
+
+/* ====== Staggered reveal ====== */
+.card > *{opacity:0; animation:stagger .6s ease forwards}
+.card > *:nth-child(1){animation-delay:.08s}
+.card > *:nth-child(2){animation-delay:.14s}
+.card > *:nth-child(3){animation-delay:.2s}
+.card > *:nth-child(4){animation-delay:.26s}
+.card > *:nth-child(5){animation-delay:.32s}
+.card > *:nth-child(6){animation-delay:.38s}
+.card > *:nth-child(7){animation-delay:.44s}
+.card > *:nth-child(8){animation-delay:.5s}
+
+/* ====== Modal (hash-target) ====== */
+.modal{
+  position:fixed; inset:0; display:grid; place-items:center;
+  background:rgba(6,22,44,.45); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  opacity:0; pointer-events:none; transition:opacity .35s ease;
+}
+.modal:target{opacity:1; pointer-events:auto}
+.modal__card{
+  width:min(440px,92vw);
+  background:#fff; border-radius:20px; padding:28px 24px 22px;
+  box-shadow:0 24px 60px rgba(0,0,0,.35);
+  text-align:center; position:relative; overflow:hidden;
+  transform:translateY(24px) scale(.96); opacity:0;
+  animation:modalIn .5s cubic-bezier(.2,.8,.2,1) forwards .06s;
+}
+.modal h2{margin:14px 0 6px; color:var(--ink)}
+.modal p{margin:0 0 16px; color:#43607a}
+.btn--ghost{
+  background:#eef5ff; color:var(--brand); box-shadow:none; font-weight:700;
+}
+.btn--ghost:hover{background:#e1eeff}
+
+/* Animated checkmark */
+.tick{width:86px; height:86px; display:block; margin:2px auto 6px}
+.tick__circle{stroke:var(--ok); stroke-width:4; stroke-linecap:round; opacity:.25}
+.tick__check{stroke:var(--ok); stroke-width:4; stroke-linecap:round; stroke-linejoin:round;
+  stroke-dasharray:48; stroke-dashoffset:48; animation:draw .8s ease forwards .15s}
+.modal:target .tick__circle{animation:pulse 1.2s ease infinite .5s}
+
+/* Confetti (subtle, classy) */
+.confetti{position:absolute; inset:0; pointer-events:none}
+.confetti span{
+  --x:0; --y:0; --r:0; --d:0;
+  position:absolute; width:8px; height:14px; border-radius:2px;
+  left:calc(50% + var(--x)); top:calc(20% + var(--y));
+  background: conic-gradient(from 0turn, #ff4d4d, #ffd24d, #4dff88, #4db8ff, #b84dff, #ff4d4d);
+  transform:translate(-50%,-50%) rotate(var(--r));
+  opacity:0; animation:drop 1s ease forwards var(--d);
+}
+/* positions */
+.confetti span:nth-child(1){--x:-120px;--y:-10px;--r:12deg;--d:.05s}
+.confetti span:nth-child(2){--x:-70px;--y:-30px;--r:-18deg;--d:.1s}
+.confetti span:nth-child(3){--x:-10px;--y:-40px;--r:8deg;--d:.12s}
+.confetti span:nth-child(4){--x:40px;--y:-35px;--r:-6deg;--d:.08s}
+.confetti span:nth-child(5){--x:95px;--y:-15px;--r:22deg;--d:.14s}
+.confetti span:nth-child(6){--x:140px;--y:-5px;--r:-10deg;--d:.16s}
+.confetti span:nth-child(7){--x:-140px;--y:10px;--r:6deg;--d:.18s}
+.confetti span:nth-child(8){--x:-90px;--y:20px;--r:-14deg;--d:.22s}
+.confetti span:nth-child(9){--x:-30px;--y:15px;--r:4deg;--d:.26s}
+.confetti span:nth-child(10){--x:30px;--y:10px;--r:-12deg;--d:.24s}
+.confetti span:nth-child(11){--x:90px;--y:22px;--r:10deg;--d:.28s}
+.confetti span:nth-child(12){--x:135px;--y:16px;--r:-16deg;--d:.3s}
+
+/* ====== Keyframes ====== */
+@keyframes fadeDown{from{opacity:0;transform:translateY(-40px)}to{opacity:1;transform:none}}
+@keyframes liftIn{from{opacity:0;transform:translateY(44px) rotateX(8deg)}to{opacity:1;transform:none}}
+@keyframes stagger{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes shine{to{transform:translateX(60%) rotate(8deg)}}
+@keyframes modalIn{to{transform:none; opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pulse{
+  0%,100%{opacity:.25; transform:scale(1)}
+  50%{opacity:.5; transform:scale(1.02)}
+}
+@keyframes drop{
+  0%{opacity:0; transform:translate(-50%,-50%) translateY(-10px) rotate(var(--r))}
+  60%{opacity:1}
+  100%{opacity:0; transform:translate(-50%,-50%) translateY(70px) rotate(calc(var(--r) + 80deg))}
+}
+
